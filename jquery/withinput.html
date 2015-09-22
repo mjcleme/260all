@@ -1,0 +1,38 @@
+
+<html>
+<head>
+<title>City Finder</title>
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+
+</head>
+<body>
+<form>
+Enter A Utah City: <input type="text" id="cityfield" value=""><br>
+Suggestion: <span id="txtHint">Empty</span>
+<p>Current Weather</p>
+<div id="weather">No weather</div>
+
+</form>
+<script>
+$( "#cityfield" ).keyup(function() {
+  var url = "https://students.cs.byu.edu/~clement/CS360/ajax/getcity.cgi?q="+$("#cityfield").val();
+  $.getJSON(url,function(data) {
+    var everything;
+    everything = "<ul>";
+    $.each(data, function(i,item) {
+      everything += "<li> "+data[i].city;
+    });
+    everything += "</ul>";
+    $("#txtHint").html(everything);
+  })
+  .success(function() { console.log("second success"); })
+  .error(function(jqXHR, textStatus, errorThrown) { 
+   console.log("error "+textStatus);
+   console.log("incoming "+jqXHR.responseText);
+  })
+  .complete(function() { console.log("complete"); });
+});
+</script>
+</body>
+</html>
+

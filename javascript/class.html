@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h1>JavaScript is Wonderful</h1>
+
+<p>Please enter a city in Utah</p>
+<input id="numb" type="text" onkeyup="showHint(this.value)">
+
+<p id="demo"></p>
+<script>
+var cities = ["Alpine", "Altamont", "Alton", "Altonah"];
+
+function showHint(str)
+{
+  var list = "<ul>";
+  for(i = 0; i < cities.length; i++) {
+    console.log("city "+i+" "+cities[i]+" "+str);
+    if(cities[i].indexOf(str) === 0) {
+      list += "<li> "+cities[i]+"</li>";
+      console.log("found "+cities[i]);
+      
+    }
+  }
+  list +="</ul>";
+  document.getElementById("demo").innerHTML = list;
+}
+
+
+
+</script>
+</body>
+</html> 
