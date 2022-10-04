@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script>
+        function fizzbuzz() {
+            for(i = 1; i < 100; i++) {
+                if(!(i%3)) {
+                    console.log("Fizz");
+                } 
+                if((i%3) && ((i%5)==0)) {
+                     console.log("Buzz");
+                } 
+                if((i%3) && (i%5)) {
+                    console.log(i);
+                }
+
+            }
+            
+        }
+        function min(x,y) {
+            if(x<y) {
+                return(x);
+            } else {
+                return(y);
+            }
+        }
+        function testmin() {
+            console.log(min(0, 10));
+            // → 0
+            console.log(min(0, -10));
+            // → -10
+        }
+        var flatten = function () {
+            let arrays = [[1, 2, 3], [4, 5], [6]];
+            console.log("A[0]",arrays[0][1]);
+            myflat = arrays.reduce(
+            function(flat, current) {
+              console.log("flat ",flat," current ",current);
+              return flat.concat(current);
+            }, []);
+          console.log(myflat);
+            // Your code here.
+            // → [1, 2, 3, 4, 5, 6]
+        }
+    </script>
+</head>
+<body>
+    <p onclick="fizzbuzz()">Fizzbuzz</p>
+    <p onclick="testmin()">min</p>
+    <p onclick="flatten()">flatten</p>
+</body>
+</html>
