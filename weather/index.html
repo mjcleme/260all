@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8" />
+    <title>Lab 2</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+
+  <body>
+
+    <h1>Lab 2</h1>
+    <form>
+      <label>Enter a U.S. city</label>
+      <input id="weatherInput" type="text"></input><br />
+      <input id="weatherSubmit" type="submit" value="Submit"></input>
+    </form>
+    <h1>Weather Report</h1>
+    <div id="weatherResults"></div>
+    <h1>Weather Forecast</h1>
+    <div id="forecastResults"></div>
+    <script>
+      document.getElementById("weatherSubmit").addEventListener("click", function (event) {
+        event.preventDefault();
+        const value = document.getElementById("weatherInput").value;
+        if (value === "")
+          return;
+        console.log(value);
+        const url = "https://api.openweathermap.org/data/2.5/weather?q=" + value + ",US&units=imperial" + "&APPID=f171dd015fc111d08cf6dce8beaf2c43";
+        fetch(url)
+          .then(function (response) {
+            return response.json();
+          }).then(function (json) {
+            console.log(json);
+            let results = "";
+            results += '<h2>Weather in ' + json.name + "</h2>";
+            for (let i = 0; i < json.weather.length; i++) {
+              results += '<img src="http://openweathermap.org/img/w/' + json.weather[i].icon + '.png"/>';
+            }
+            results += '<h2>' + json.main.temp + " &deg;F</h2>"
+            results += "<p>"
+            for (let i = 0; i < json.weather.length; i++) {
+              results += json.weather[i].description
+              if (i !== json.weather.length - 1)
+                results += ", "
+            }
+            results += "</p>";
+            document.getElementById("weatherResults").innerHTML = results;
+          });
+        const url2 = "https://api.openweathermap.org/data/2.5/forecast?q=" + value + ", US&units=imperial" + "&APPID=f171dd015fc111d08cf6dce8beaf2c43";
+        fetch(url2)
+          .then(function (response) {
+            return response.json();
+          }).then(function (json) {
+            console.log(json);
+            let forecast = "";
+            for (let i = 0; i < json.list.length; i++) {
+              forecast += "<h2>" + moment(json.list[i].dt_txt).format('MMMM Do YYYY, h:mm:ss a') + "</h2>";
+              forecast += "<p>Temperature: " + json.list[i].main.temp + "</p>";
+              forecast += '<img src="http://openweathermap.org/img/w/' + json.list[i].weather[0].icon + '.png"/>'
+            }
+            document.getElementById("forecastResults").innerHTML = forecast;
+          });
+      });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" crossorigin="anonymous"></script>
+    <script text="type/javascript" src="script.js">
+    </script>
+
+  </body>
+
+</html>
